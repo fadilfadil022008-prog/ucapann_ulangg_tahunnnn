@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Untuk Alwaa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   PANDUAN CEPAT (boleh dihapus setelah selesai edit):
+   1. Ganti "Alwaa" di baris <title> dan bagian <h1 id="namaDia"> dengan nama panggilannya.
+   2. Ganti "Nama Kamu" di bagian tanda tangan (cari id="namaPengirim") dengan namamu.
+   3. Tulis ucapanmu sendiri di bagian <p id="isiUcapan">...</p> — ganti teks di dalam tanda kurung siku.
+   4. Untuk foto: taruh file foto ke folder "foto/" dengan nama foto1.jpg, foto2.jpg, foto3.jpg dst
+      sampai foto15.jpg (boleh .jpg / .png / .jpeg, tinggal sesuaikan nama filenya).
+      Kalau foto belum ada, kotaknya akan tampil sebagai placeholder bertuliskan nomor — 
+      jadi kamu tahu foto mana yang belum ditaruh.
+   5. Tanggal hitung mundur sudah diatur ke 2 Oktober 2026 (lihat bagian <script> di paling bawah,
+      variabel targetDate) — ubah di situ kalau tanggalnya berubah.
+   ============================================================ */
+
+:root{
+  --cream:#fff8f4;
+  --blush:#f7d9d9;
+  --rose:#c97b84;
+  --deep:#5b2333;
+  --gold:#c9a15a;
+  --ink:#3a2229;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Quicksand',sans-serif;
+  background:var(--cream);
+  color:var(--ink);
+  overflow-x:hidden;
+}
+h1,h2,.serif{font-family:'Cormorant Garamond',serif}
+
+/* Background floating hearts (dekorasi halus, tidak mengganggu) */
+.petal{
+  position:fixed;
+  top:-40px;
+  font-size:1.4rem;
+  opacity:.35;
+  animation:fall linear infinite;
+  pointer-events:none;
+  z-index:1;
+}
+@keyframes fall{
+  to{ transform:translateY(110vh) rotate(360deg); }
+}
+
+section{
+  position:relative;
+  z-index:2;
+  padding:80px 20px;
+  max-width:720px;
+  margin:0 auto;
+}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:40px 20px;
+  background:radial-gradient(circle at 50% 20%, var(--blush), var(--cream) 70%);
+}
+.eyebrow{
+  color:var(--rose);
+  font-size:.95rem;
+  letter-spacing:.02em;
+  margin-bottom:10px;
+}
+.hero h1{
+  font-size:clamp(2.6rem,8vw,4.2rem);
+  color:var(--deep);
+  font-weight:600;
+  font-style:italic;
+  line-height:1.1;
+}
+.hero p.sub{
+  margin-top:14px;
+  color:var(--ink);
+  opacity:.75;
+  font-size:1.05rem;
+  max-width:420px;
+}
+.scrolldown{
+  margin-top:60px;
+  font-size:.85rem;
+  color:var(--rose);
+  opacity:.8;
+}
+.scrolldown span{
+  display:block;
+  margin-top:6px;
+  animation:bob 1.8s ease-in-out infinite;
+}
+@keyframes bob{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(6px)}
+}
+
+/* ===== COUNTDOWN ===== */
+.countdown-wrap{
+  text-align:center;
+}
+.countdown-wrap h2{
+  font-size:1.9rem;
+  color:var(--deep);
+  font-style:italic;
+  margin-bottom:6px;
+}
+.countdown-wrap .cap{
+  color:var(--rose);
+  font-size:.95rem;
+  margin-bottom:34px;
+}
+.timer{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  flex-wrap:wrap;
+}
+.timer .box{
+  background:#fff;
+  border:1px solid var(--blush);
+  border-radius:14px;
+  padding:18px 16px;
+  min-width:78px;
+  box-shadow:0 8px 20px -12px rgba(91,35,51,.25);
+}
+.timer .box b{
+  display:block;
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.1rem;
+  color:var(--deep);
+  font-weight:600;
+}
+.timer .box span{
+  font-size:.72rem;
+  color:var(--rose);
+  letter-spacing:.03em;
+}
+.arrived{
+  display:none;
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:1.6rem;
+  color:var(--deep);
+}
+
+/* ===== UCAPAN ===== */
+.letter{
+  background:#fff;
+  border-radius:22px;
+  padding:50px 36px;
+  box-shadow:0 20px 50px -30px rgba(91,35,51,.35);
+  position:relative;
+}
+.letter::before{
+  content:"❝";
+  position:absolute;
+  top:-6px;
+  left:26px;
+  font-size:3.5rem;
+  color:var(--blush);
+  font-family:serif;
+}
+.letter h2{
+  font-size:2rem;
+  color:var(--deep);
+  font-style:italic;
+  margin-bottom:22px;
+  text-align:center;
+}
+.letter p{
+  font-size:1.08rem;
+  line-height:1.9;
+  color:var(--ink);
+  margin-bottom:16px;
+}
+.signature{
+  margin-top:30px;
+  text-align:right;
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:1.3rem;
+  color:var(--rose);
+}
+
+/* ===== GALLERY ===== */
+.gallery-head{
+  text-align:center;
+  margin-bottom:36px;
+}
+.gallery-head h2{
+  font-size:2rem;
+  color:var(--deep);
+  font-style:italic;
+}
+.gallery-head p{
+  color:var(--rose);
+  font-size:.95rem;
+  margin-top:6px;
+}
+.grid{
+  columns:2;
+  column-gap:12px;
+}
+@media(min-width:600px){ .grid{ columns:3; } }
+.grid figure{
+  break-inside:avoid;
+  margin-bottom:12px;
+  border-radius:14px;
+  overflow:hidden;
+  background:linear-gradient(135deg,var(--blush),var(--cream));
+  position:relative;
+}
+.grid img{
+  width:100%;
+  display:block;
+  aspect-ratio:1/1.15;
+  object-fit:cover;
+}
+.grid .missing{
+  aspect-ratio:1/1.15;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:4px;
+  color:var(--rose);
+  font-size:.8rem;
+  text-align:center;
+  padding:10px;
+}
+.grid .missing b{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;
+  color:var(--deep);
+}
+
+/* ===== CLOSING ===== */
+.closing{
+  text-align:center;
+  padding-bottom:100px;
+}
+.closing h2{
+  font-size:2.4rem;
+  color:var(--deep);
+  font-style:italic;
+  margin-bottom:14px;
+}
+.closing p{
+  color:var(--ink);
+  opacity:.8;
+  max-width:420px;
+  margin:0 auto;
+  line-height:1.8;
+}
+.heart-icon{
+  font-size:2rem;
+  margin-top:22px;
+  display:block;
+  animation:pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.15)}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{ animation:none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Dekorasi kelopak jatuh -->
+<div id="petals"></div>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="eyebrow">Untuk seseorang yang istimewa</div>
+  <h1 id="namaDia">Putri Salwa Maimanah</h1>
+  <p class="sub">Ada sesuatu yang ingin aku sampaikan, ditulis khusus untukmu.</p>
+  <div class="scrolldown">Gulir ke bawah<span>↓</span></div>
+</section>
+
+<!-- ===== COUNTDOWN ===== -->
+<section class="countdown-wrap">
+  <h2>Hari Spesialnya Akan Tiba</h2>
+  <p class="cap">Menghitung hari sampai waktunya tiba</p>
+  <div class="timer" id="timer">
+    <div class="box"><b id="d">00</b><span>HARI</span></div>
+    <div class="box"><b id="h">00</b><span>JAM</span></div>
+    <div class="box"><b id="m">00</b><span>MENIT</span></div>
+    <div class="box"><b id="s">00</b><span>DETIK</span></div>
+  </div>
+  <div class="arrived" id="arrived">Hari ini adalah harinya. Selamat hari spesial. 🤍</div>
+</section>
+
+<!-- ===== UCAPAN ===== -->
+<section>
+  <div class="letter">
+    <h2>Sepenggal Ucapan</h2>
+    <p id="isiUcapan">
+      [hayoo sayanggg, hahahaaa bemanaaa, kagettt yaaaaa? hahahaaaa yaaa walaupun ndkk se indah caranyaa orangg oranggg,
+       tapii ini yang bisaa ku kasihhh ki sayanggg, ehhh selamattt ulangg tahunnn yaaaaa yanggg ke 19, semogaaa panjanggg umur sehattt selaluuu
+      dannn apaaa lagii yaaaa? dannn semogaaa rasaa sayanggg nyaa ituuu menambah truss ke aquuu hahahaaa, ayooo samaa samaa berdoa,
+       semogaaa pacarkuuuuuu di berikan kesehatannn, semuaa keinginan nya bisa tercapaiii dannn bisaa membahagiakan oranggg tuaa nyaaa, tidakk lupaaa sama ibadahnyaa.
+       apaa lagii yaa sayaangg, untukkk pacarrkuuu terimaaa kasihh yaaa karenaaa selaluuu adaa untukk aquuuu, dan senantiasaa menjadii pacarrr idamannn
+       sumpahh baruu kaliii iniii ketemuuu manusiaa sepertii iniii, dann mintaa maaff yaa kalauuu selaluuu bikin kiii kesalll, sedihhh, menjenkelkann dann jugaaa banyakk sekalii salahkuuu samaa kitaaa
+       terimahh kasihh banyakk sayanggg selaluu kiii jadii orangg pertamaa kalauu adaa butuhhkuuu hadehhh sumpahh bersyukurr sekaliaa sayangg punyaa kitaaa
+       dannn aquuu banggaa bangettt punyaa pacarr yanggg kuattt, penyabar dann ndk pantanggg menyerahhh semoga doa yangg tadi cepatt terkabull "aamiinn" salamm hormatt darii pacarmuuu.]
+    </p>
+  
+    <div class="signature">— <span id="namaPengirim">Muh. Nur Fadhilah</span></div>
+  </div>
+</section>
+
+<!-- ===== GALLERY ===== -->
+<section>
+  <div class="gallery-head">
+    <h2>foto kamuuuuuuuu</h2>
+    <p>Beberapa momen yang ingin selalu diingat</p>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<!-- ===== CLOSING ===== -->
+<section class="closing">
+  <h2>Selamat Hari Bahagiamu</h2>
+  <p>Semoga tahun ini membawa lebih banyak hal baik, lebih banyak alasan untuk tersenyum, dan lebih banyak cerita indah untuk dikenang.</p>
+  <span class="heart-icon">🤍</span>
+</section>
+
+<script>
+/* ============ GALLERY: memuat foto1.jpg s/d foto15.jpg ============
+   Kalau file fotonya belum ada di folder "foto/", kotak akan menampilkan
+   placeholder nomor, jadi kamu tahu mana yang masih perlu ditambahkan. */
+const TOTAL_FOTO = 15; // ganti angka ini kalau jumlah fotomu lebih/kurang dari 15
+const grid = document.getElementById('grid');
+
+for(let i=1;i<=TOTAL_FOTO;i++){
+  const fig = document.createElement('figure');
+  const img = document.createElement('img');
+  img.src = `foto/foto${i}.jpg`;
+  img.alt = `Kenangan ${i}`;
+  img.loading = 'lazy';
+  img.onerror = function(){
+    fig.innerHTML = `<div class="missing"><b>${i}</b>taruh foto${i}.jpg<br>di folder foto/</div>`;
+  };
+  fig.appendChild(img);
+  grid.appendChild(fig);
+}
+
+/* ============ COUNTDOWN ============ */
+// Format: Tahun, Bulan(0=Jan), Tanggal, Jam, Menit
+const targetDate = new Date(2026, 9, 2, 0, 0, 0); // 2 Oktober 2026, jam 00:00
+
+function updateCountdown(){
+  const now = new Date();
+  const diff = targetDate - now;
+  if(diff <= 0){
+    document.getElementById('timer').style.display = 'none';
+    document.getElementById('arrived').style.display = 'block';
+    return;
+  }
+  const d = Math.floor(diff / (1000*60*60*24));
+  const h = Math.floor(diff / (1000*60*60) % 24);
+  const m = Math.floor(diff / (1000*60) % 60);
+  const s = Math.floor(diff / 1000 % 60);
+  document.getElementById('d').textContent = String(d).padStart(2,'0');
+  document.getElementById('h').textContent = String(h).padStart(2,'0');
+  document.getElementById('m').textContent = String(m).padStart(2,'0');
+  document.getElementById('s').textContent = String(s).padStart(2,'0');
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+/* ============ Dekorasi kelopak jatuh ============ */
+const petalsContainer = document.getElementById('petals');
+const petalEmojis = ['🌸','💮','🤍'];
+for(let i=0;i<14;i++){
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.textContent = petalEmojis[i % petalEmojis.length];
+  p.style.left = Math.random()*100 + 'vw';
+  p.style.animationDuration = (10 + Math.random()*10) + 's';
+  p.style.animationDelay = (Math.random()*10) + 's';
+  petalsContainer.appendChild(p);
+}
+</script>
+</body>
+</html>
